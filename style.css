@@ -1,0 +1,39 @@
+.sidebar {
+    width: 3%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: width 0.5s;
+    cursor: pointer;
+    background-color: yellow;
+}
+
+.header {
+    height:40vh;
+    width: 100%;
+    background-color:blue;
+    margin-top: 0px;
+}
+
+.linea {
+    width: 0; /* Larghezza iniziale nulla */
+    height: 2px; /* Spessore della linea */
+    background-color: blue; /* Colore della linea */
+    position: absolute;
+    top: 50%; /* Posiziona la linea al centro verticalmente */
+    left: 0; /* Posiziona la linea inizialmente a sinistra */
+    animation: animazioneEntrata 2s linear forwards; /* Animazione di 2 secondi */
+}
+
+/* Definizione dell'animazione */
+@keyframes animazioneEntrata {
+    0% {
+        width: 0; /* Larghezza iniziale nulla */
+        left: 0; /* Posizione iniziale a sinistra */
+    }
+    100% {
+        width: 100%; /* Larghezza al 100% */
+        left: 0; /* Posizione finale a sinistra */
+    }
+}
