@@ -57,8 +57,9 @@ h6 {
 }
 
 .back-to-top:hover {
-  background: #33eb92;
+  background: #007aff;
   color: #fff;
+  transform: scale(1.08);
 }
 
 .back-to-top.active {
@@ -384,7 +385,7 @@ h6 {
   border-radius: 4px;
   transition: 0.5s;
   color: #fff;
-  background: #3B8BCE;;
+  background: #3B8BCE;
   box-shadow: 0 8px 28px rgba(90, 155, 228, 0.45)
 }
 
@@ -685,6 +686,48 @@ section {
   font-size: 14px;
 }
 
+.publication {
+    border-left: 22px solid #3B8BCE;
+    padding-left:0;
+    transition: transform 0.3s;
+}
+
+.publication:hover {
+  transform: scale(1.08);
+  opacity: 1;
+}
+
+.btn-publication {
+  font-family: "Raleway", sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 6px 20px 6px 20px;
+  margin: 10px 0 10px 0;
+  border-radius: 4px;
+  transition: 0.5s;
+  color: #fff;
+  background: #3B8BCE;
+}
+.btn-publication:hover {
+  font-size: 14px;
+  background: #3B8BCE;
+  transform: scale(1.08);
+  opacity: 1;
+}
+
+.abstract {
+    padding: 10px 10px;
+    border: 1px solid #E5E5E5;
+    border-radius: 0.25rem;
+    font-size: 14px;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+
+
 /*--------------------------------------------------------------
 # About
 --------------------------------------------------------------*/
@@ -724,6 +767,19 @@ section {
 }
 
 /*--------------------------------------------------------------
+# Professional Service
+--------------------------------------------------------------*/
+
+.professional-service-item {
+
+}
+
+.service-title{
+    font-weight: 600;
+    font-size: 20px;
+}
+
+/*--------------------------------------------------------------
 # Resume
 --------------------------------------------------------------*/
 .resume .resume-title {
@@ -736,7 +792,7 @@ section {
 .resume .resume-item {
   padding: 0 0 50px 20px;
   margin-top: 0px;
-  border-left: 2px solid #1f5297;
+  border-left: 2px solid #3B8BCE;
   position: relative;
   text-align: left;
 }
@@ -780,7 +836,7 @@ section {
   left: -9px;
   top: 0;
   background: #fff;
-  border: 2px solid #1f5297;
+  border: 2px solid #3B8BCE;
 }
 
 #education-list {
@@ -822,7 +878,7 @@ section {
 .services .icon-box {
   text-align: center;
   border: 1px solid #fff;
-  padding: 20px 20px;
+  padding: 15px 20px;
   transition: all ease-in-out 0.3s;
   background: #fff;
 }
@@ -900,31 +956,55 @@ section {
 }
 
 .portfolio .portfolio-item {
-  margin-bottom: 30px;
+  margin: 0px 10px 3px;
+  background-image: url("/vipenti.github.io/assets/img/paper2.jpg");
+  background-repeat:no-repeat;
+  background-size:contain;
+  height: 250px;
+  width: 400px;
+  transition: transform 0.3s;
+  text-align:center;
+  padding: 40px 10px;
+  border: 2px solid #fff;
+  border-radius: 6px;
+  color: #5f687b;
+}
+
+.portfolio .portfolio-item:hover {
+  transform: scale(1.08);
+  color: #3B8BCE;
 }
 
 .portfolio .portfolio-item .portfolio-info {
   opacity: 0;
-  position: absolute;
-  left: 30px;
-  right: 30px;
+  left: 100%;
+  right: 100%;
   bottom: 0;
   z-index: 3;
   transition: all ease-in-out 0.3s;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 15px;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 0px 15px 0px;
 }
 
 .portfolio .portfolio-item .portfolio-info h4 {
-  font-size: 18px;
+  font-size: 14px;
   color: #fff;
   font-weight: 600;
   color: #5f687b;
 }
 
+.portfolio .portfolio-item h4 a {
+  color: #5f687b;
+  font-weight: 800;
+}
+
+.portfolio .portfolio-item h4 a:hover {
+  color:#3B8BCE;
+}
+
 .portfolio .portfolio-item .portfolio-info p {
-  color: #949cac;
-  font-size: 14px;
+  color: #5f687b;
+  font-size: 16px;
   margin-bottom: 0;
 }
 
@@ -940,7 +1020,7 @@ section {
 
 .portfolio .portfolio-item .portfolio-info .preview-link:hover,
 .portfolio .portfolio-item .portfolio-info .details-link:hover {
-  color: #3B8BCE;;
+  color: #3B8BCE;
 }
 
 .portfolio .portfolio-item .portfolio-info .details-link {
