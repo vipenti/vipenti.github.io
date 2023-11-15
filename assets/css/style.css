@@ -967,7 +967,7 @@ section {
 
 .portfolio .portfolio-item {
   margin: 0px 10px 3px;
-  background-image: url("/vipenti.github.io/assets/img/paper2.jpg");
+  background-image: url("../img/paper2.jpg");
   background-repeat:no-repeat;
   background-size:contain;
   height: 250px;
