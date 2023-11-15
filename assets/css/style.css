@@ -552,13 +552,23 @@ h6 {
     width: 80%;
   }
   .flipper{
-    width: 460px;
-    height: 380px;
+    width: 110%;
+    height: 16rem;
   }
 
     #buttons-div {
         padding: 1% 25% 5% 13%;
     }
+}
+
+@media (max-width: 445px) {
+  #hero .hero-img img {
+    width: 60%;
+  }
+  .flipper{
+    width: 110%;
+    height: 16rem;
+  }
 }
 
 @keyframes up-down {
