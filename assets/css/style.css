@@ -702,6 +702,10 @@ section {
     transition: transform 0.3s;
 }
 
+.publication_box {
+  margin-bottom: 1.5%;
+}
+
 .publication:hover {
   transform: scale(1.08);
   opacity: 1;
