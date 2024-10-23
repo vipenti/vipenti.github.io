@@ -1,0 +1,148 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+    margin: 0;
+}
+
+p {
+margin-bottom: 5px;
+}
+
+/* Contenitore principale */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Layout per il contenitore del video e chat */
+.main-content {
+    display: flex;
+    justify-content: flex-start; /* Allinea gli elementi senza spazio in mezzo */
+    align-items: flex-start; /* Allinea gli elementi all'inizio in verticale */
+    gap: 30px; /* Mantieni uno spazio di 30px tra gli elementi */
+}
+
+/* Stile per il video player */
+#video-player {
+    width: 960px;
+    height: 540px;
+    background-color: blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+/* Stile per la chat */
+#chat-box {
+    width: 360px;
+    height: 540px;
+    border: 2px solid #ccc;
+    padding: 10px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+/* Storico delle domande */
+#chat-history {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+/* Text input per la domanda */
+#question-input {
+    width: 100%;
+    height: 80px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Pulsante invio domanda */
+#submit-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#submit-button:hover {
+    background-color: #45a049;
+}
+
+/* Pulsante Fine */
+#end-button {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#end-button button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#end-button button:hover {
+    background-color: #45a049;
+}
+
+/* Nascondi il contenuto principale finché l'ID non è valido */
+#main-content {
+    display: none;
+}
+
+/* Stile per il contenitore dell'input */
+#lesson-input {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#lesson-input input {
+    padding: 10px;
+    font-size: 18px;
+    width: 250px;
+}
+
+#lesson-input button {
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+#lesson-input button:hover {
+    background-color: #45a049;
+}
+
+#error-message {
+    color: red;
+    font-weight: bold;
+    display: none;
+}

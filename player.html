@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Watch the Lesson!</title>
+    <meta name="description" content="Video Player for Videolessons">
+    <meta name="author" content="Viviana Pentangelo">
+
+    <!-- Favicons -->
+    <link href="assets/img/icon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="assets/css/exp_style.css" rel="stylesheet">
+
+    <!--<script>
+        function sendQuestion() {
+            let video_id = "2605";  // ID del video (può essere dinamico)
+            let currentTime = player.getCurrentTime();  // Ottieni il timestamp attuale in secondi
+            let minutes = Math.floor(currentTime / 60);  // Converti in minuti
+            let seconds = Math.floor(currentTime % 60);  // Ottieni i secondi rimanenti
+            let timestamp = minutes + ":" + (seconds < 10 ? '0' + seconds : seconds);  // Formatta MM:SS
+
+            let questionInput = document.getElementById("question-input");
+            let question = questionInput.value;
+            let chatHistory = document.getElementById('chat-history');
+
+            fetch('https://script.google.com/macros/s/AKfycbzpsUEn_PUD1vNzLJ51IiqiSqwQjv-1OzL5VZDJws69JDVFYlX2z1vdnXMcgiD4rMzD/exec', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'video_id=' + encodeURIComponent(video_id) +
+                      '&timestamp=' + encodeURIComponent(timestamp) +
+                      '&question=' + encodeURIComponent(question)
+            }).then(() => {
+                alert("Domanda inviata!");
+
+                let newQuestion = document.createElement('p');
+                newQuestion.textContent = `Minuto ${timestamp}: ${question}`;
+
+                chatHistory.appendChild(newQuestion);
+
+                questionInput.value = '';
+
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+
+            }).catch(err => {
+                console.error(err);
+                alert("Errore nell'invio della domanda.");
+            });
+        }
+    </script>-->
+
+    <!-- =======================================================
+    * Template Name: eNno
+    * Updated: Sep 18 2023 with Bootstrap v5.3.2
+    * Template URL: https://bootstrapmade.com/enno-free-simple-bootstrap-template/
+    * Author: BootstrapMade.com
+    * License: https://bootstrapmade.com/license/
+    ======================================================== -->
+  </head>
+</head>
+
+<!-- Implementation ID: AKfycbzpsUEn_PUD1vNzLJ51IiqiSqwQjv-1OzL5VZDJws69JDVFYlX2z1vdnXMcgiD4rMzD-->
+<!-- URL: https://script.google.com/macros/s/AKfycbzpsUEn_PUD1vNzLJ51IiqiSqwQjv-1OzL5VZDJws69JDVFYlX2z1vdnXMcgiD4rMzD/exec-->
+
+<body>
+
+<!-- Schermata iniziale per l'inserimento del codice -->
+<div id="lesson-input">
+  <h2>Inserisci codice lezione</h2>
+  <p> Test: Inserisci un valore da 1 a 5 </p>
+  <input type="text" id="lesson-id" placeholder="Inserisci ID lezione">
+  <button onclick="checkLessonId()">GO</button>
+  <p id="error-message">ID non valido</p>
+</div>
+
+<!-- Contenuto principale nascosto inizialmente -->
+<div class="container" id="main-content">
+  <!-- Contenitore del video e della chat -->
+  <div class="main-content">
+    <!-- Contenitore per il video -->
+    <div>
+      <h2 id="lesson-title">Lezione #</h2>
+      <div id="video-player"></div>
+    </div>
+
+    <!-- Contenitore per la chat -->
+    <div>
+      <h2>Le tue domande</h2>
+      <div id="chat-box">
+        <!-- Storico delle domande -->
+        <div id="chat-history">
+          <!-- Le domande appariranno qui -->
+        </div>
+        <!-- Text input e invio -->
+        <textarea id="question-input" rows="4" cols="50" placeholder="Scrivi la tua domanda..."></textarea>
+        <button id="submit-button" onclick="sendQuestion()">Invia Domanda</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pulsante finale -->
+  <!--<div id="end-button">
+    <button>Fine</button>
+  </div>-->
+</div>
+
+<!-- API di YouTube -->
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+        var player;
+        var videoId = '';  // L'ID del video verrà settato dopo che l'utente inserisce un ID valido
+        var inputId = '';
+
+        // Dizionario delle lezioni {id: videoId}
+
+        const lessons = {
+          "1": "jmmW0F0biz0",
+          "2": "q6kJ71tEYqM",
+          "3": "qYNweeDHiyU",
+          "4": "Yq0QkCxoTHM",
+          "5": "AXn2XVLf7d0",
+        };
+
+        // Funzione per controllare l'ID della lezione
+        function checkLessonId() {
+          inputId = document.getElementById('lesson-id').value;
+          const errorMessage = document.getElementById('error-message');
+
+          if (lessons[inputId]) {
+              document.getElementById('lesson-input').style.display = 'none';
+              document.getElementById('main-content').style.display = 'flex';
+
+              videoId = lessons[inputId];
+
+              player = new YT.Player('video-player', {
+                  height: '360',
+                  width: '640',
+                  videoId: videoId,
+                  playerVars: {
+                      'rel': 0,
+                      'controls': 1,
+                      'disablekb': 0,
+                      'modestbranding': 1
+                  }
+              });
+
+              const lessonTitle = document.getElementById('lesson-title');
+              lessonTitle.textContent += inputId;
+          } else {
+              errorMessage.style.display = 'block';
+          }
+        }
+
+        // Funzione per inviare la domanda
+        function sendQuestion() {
+            console.log("ID del video che sto inviando:", inputId);
+
+            let video_id = videoId;  // ID del video (può essere dinamico)
+            let currentTime = player.getCurrentTime();  // Ottieni il timestamp attuale in secondi
+            let minutes = Math.floor(currentTime / 60);  // Converti in minuti
+            let seconds = Math.floor(currentTime % 60);  // Ottieni i secondi rimanenti
+            let timestamp = minutes + ":" + (seconds < 10 ? '0' + seconds : seconds);  // Formatta MM:SS
+
+            let questionInput = document.getElementById("question-input");
+            let question = questionInput.value;
+            let chatHistory = document.getElementById('chat-history');
+
+            // Invia la domanda e aggiorna la chat
+            fetch('https://script.google.com/macros/s/AKfycbzpsUEn_PUD1vNzLJ51IiqiSqwQjv-1OzL5VZDJws69JDVFYlX2z1vdnXMcgiD4rMzD/exec', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'video_id=' + encodeURIComponent(inputId) +
+                      '&timestamp=' + encodeURIComponent(timestamp) +
+                      '&question=' + encodeURIComponent(question)
+            }).then(() => {
+                // alert("Domanda inviata!");
+
+                let newQuestion = document.createElement('p');
+                newQuestion.textContent = `Minuto ${timestamp}: ${question}`;
+
+                chatHistory.appendChild(newQuestion);
+
+                questionInput.value = '';
+
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+
+            }).catch(err => {
+                console.error(err);
+                alert("Errore nell'invio della domanda.");
+            });
+        }
+    </script>
+
+</body>
+</html>
