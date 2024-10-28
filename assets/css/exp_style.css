@@ -177,12 +177,16 @@ margin-bottom: 5px;
     }
 
     #chat-box {
-        width: 560px;
-        height: 320px;
+        width: 375px;
+        height: 280px;
     }
 
      #video-player {
-        width: 560px;
-        height: 320px;
+        width: 375px;
+        height: 220px;
+    }
+
+    #question-input {
+        height: 40px;
     }
 }
