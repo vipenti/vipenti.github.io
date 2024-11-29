@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self Evaluation Form</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .error-message {
+            color: red;
+            margin-bottom: 10px;
+            display: none;
+        }
+    </style>
+    <script>
+        function validateAndProceed() {
+            const getElementValue = (id) => {
+                const element = document.getElementById(id);
+                return element ? element.value.trim() : null;
+            };
+
+            const userId = getElementValue("user-id");
+            const knowledge = getElementValue("knowledge");
+            const interest = getElementValue("interest");
+            const concentration = getElementValue("concentration");
+            const criticalThinking = getElementValue("critical-thinking");
+            const intuition = getElementValue("intuition");
+            const motivation = getElementValue("motivation");
+            const abilityToLearn = getElementValue("ability-to-learn");
+            const creativity = getElementValue("creativity");
+            const logic = getElementValue("logic");
+            const memory = getElementValue("memory");
+            const emotionality = getElementValue("emotionality");
+            const languageProficiency = getElementValue("language-proficiency");
+            const videoId1 = getElementValue("video-id-1");
+            const videoId2 = getElementValue("video-id-2");
+            const acceptChecked = document.getElementById("accept")?.checked;
+            const errorMessage = document.getElementById("error-message");
+
+            let errors = [];
+
+            // Controlla accettazione privacy
+            if (!acceptChecked) {
+                errors.push("Devi accettare le informazioni sulla privacy.");
+            }
+
+            // Controlla ID partecipante
+            if (!userId) {
+                errors.push("Devi inserire il tuo ID Partecipante.");
+            }
+
+            // Controlla ID video
+            if (!videoId1 || !videoId2) {
+                errors.push("Devi inserire entrambi gli ID dei video.");
+            }
+
+            // Controlla che tutte le selezioni siano complete
+            const selects = document.querySelectorAll("select");
+            selects.forEach(select => {
+                if (select.value === "--") {
+                    errors.push("Devi completare tutte le domande della sezione di auto-valutazione.");
+                }
+            });
+
+            // Mostra errori o procedi
+            if (errors.length > 0) {
+                errorMessage.innerHTML = errors.join("<br>");
+                errorMessage.style.display = "block";
+            } else {
+                errorMessage.style.display = "none";
+
+                // Invia i dati tramite POST
+                sendFormData(userId, knowledge, interest, concentration, criticalThinking, intuition, motivation, abilityToLearn, creativity, logic, memory, emotionality, languageProficiency, videoId1, videoId2);
+
+                // Reindirizza alla pagina del player con i parametri
+                //window.location.href = `player.html?participantId=${encodeURIComponent(userId)}&video1=${encodeURIComponent(videoId1)}&video2=${encodeURIComponent(videoId2)}`;
+            }
+        }
+
+        function sendFormData(userId, knowledge, interest, concentration, criticalThinking, intuition, motivation, abilityToLearn, creativity, logic, memory, emotionality, languageProficiency, videoId1, videoId2) {
+            const successMessage = document.getElementById("success-message");
+
+            fetch('https://script.google.com/macros/s/AKfycbyUf4VVcXKA1iXfNoMwQWzQEmxFdXVFY2V9WNyWDl5pqeh7W1VZ_98qi_v2iM7K1SU/exec', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `participant_id=${encodeURIComponent(userId)}&knowledge=${encodeURIComponent(knowledge)}&interest=${encodeURIComponent(interest)}&concentration=${encodeURIComponent(concentration)}&critical_thinking=${encodeURIComponent(criticalThinking)}&intuition=${encodeURIComponent(intuition)}&motivation=${encodeURIComponent(motivation)}&ability_to_learn=${encodeURIComponent(abilityToLearn)}&creativity=${encodeURIComponent(creativity)}&logic=${encodeURIComponent(logic)}&memory=${encodeURIComponent(memory)}&emotionality=${encodeURIComponent(emotionality)}&language_proficiency=${encodeURIComponent(languageProficiency)}`
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log("Risposta dal server:", data);
+
+            if (data === "Success") {
+                if (successMessage) {
+                    successMessage.textContent = "Dati inviati con successo! Stai per essere reindirizzato...";
+                    successMessage.style.display = "block";
+                }
+            setTimeout(() => {
+                window.location.href = `player.html?participantId=${encodeURIComponent(userId)}&video1=${encodeURIComponent(videoId1)}&video2=${encodeURIComponent(videoId2)}`;
+                }, 2000);
+            } else {
+                alert("Errore durante l'invio dei dati: " + data);
+            }
+            })
+            .catch(error => {
+                console.error("Errore nell'invio dei dati:", error);
+                alert("Si è verificato un errore durante l'invio dei dati. Riprova.");
+            });
+        }
+
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2> Informazioni preliminari</h2>
+        <p class="description">
+            Su questa piattaforma potrai accedere ai video di approfondimento per l'attività extra del corso di Fondamenti di Intelligenza Artificiale.
+            Questa piattaforma non conserva i tuoi dati personali. Dovrai inserire solo l'ID Partecipante che ti abbiamo dato in aula e gli ID dei video che ti chiediamo di vedere.
+        </p>
+
+        <div class="accept">
+            <input type="checkbox" id="accept">
+            <label for="accept">Ho letto le informazioni sulla privacy e accetto di procedere con l'attività</label>
+        </div>
+
+        <div class="id-fields">
+            <h2> Inserisci le informazioni per partecipare</h2>
+            <div class="infos">
+                <div class="inputs">
+                    <label for="user-id">ID Partecipante</label>
+                    <input type="text" id="user-id" placeholder="Inserisci ID partecipante...">
+                </div>
+                <div class="inputs">
+                    <label for="video-id">ID dei due Video</label>
+                    <div id="videos-input">
+                        <input type="text" id="video-id-1" placeholder="ID video 1...">
+                        <input type="text" id="video-id-2" placeholder="ID video 2...">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>Auto-valutazione</h2>
+        <p>
+            Compila questa auto-valutazione. Esprimi su una scala da 1 a 5 (con 1 valore minimo e 5 valore massimo).
+            <br>
+            <u>L'auto-valutazione è <b>anonima</b> e solo a fini statistici.</u>
+        </p>
+        <!-- Esempio di domande -->
+        <div class="form-item">
+            <label for="knowledge">Come valuti la tua conoscenza degli argomenti di Fondamenti di Intelligenza Artificiale 
+                visti fino ad ora?
+            </label>
+            <select id="knowledge">
+                <option value="--">--</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <div class="form-item">
+            <label for="interest">Quanto sei interessat* alla materia?</label>
+            <select id="interest">
+                <option value="--">--</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+
+        <div class="form-item">
+            <label for="concentration">Esprimi quanto ti rispecchi in questa frase: "Riesco a concentrarmi molto facilmente"</label>
+            <select id="concentration">
+                <option value="--">--</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+
+        <div class="form-item">
+            <label for="critical-thinking">Esprimi quanto ti rispecchi in questa frase: "Tendo a sviluppare facilmente un pensiero critico
+                circa gli argomenti che sto studiando"</label>
+            <select id="critical-thinking">
+                <option value="--">--</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+
+
+        <div class="form-item">
+            <label for="intuition">Esprimi quanto ti rispecchi in questa frase: "Ho grande capacità d'intuito"</label>
+            <select id="intuition">
+                <option value="--">--</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+
+
+        <div class="form-item">
+            <label for="motivation">Esprimi quanto ti rispecchi in questa frase: "Mi ritengo molto motivat* ad apprendere gli 
+                argomenti trattati"</label>
+            <select id="motivation">
+                <option value="--">--</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+
+        <div class="form-item">
+            <label for="ability-to-learn">Esprimi quanto ti rispecchi in questa frase: "Riesco ad apprendere molto velocemente"</label>
+            <select id="ability-to-learn">
+                <option value="--">--</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+
+        <div class="form-item">
+            <label for="creativity">Esprimi quanto ti rispecchi in questa frase: "Mi ritengo una persona creativa"</label>
+            <select id="creativity">
+                <option value="--">--</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <div class="form-item">
+            <label for="logic">Esprimi quanto ti rispecchi in questa frase: "Ho una mente molto logica"</label>
+            <select id="logic">
+                <option value="--">--</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <div class="form-item">
+            <label for="memory">Esprimi quanto ti rispecchi in questa frase: "Ho un'ottima memoria"</label>
+            <select id="memory">
+                <option value="--">--</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <div class="form-item">
+            <label for="emotionality">Esprimi quanto ti rispecchi in questa frase: "Mi ritengo una persona molto emotiva"</label>
+            <select id="emotionality">
+                <option value="--">--</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+
+        <div class="form-item">
+            <label for="language-proficiency">Esprimi quanto ti rispecchi in questa frase: "Ci tengo ad utilizzare un linguaggio 
+                corretto e articolato quando mi esprimo"</label>
+            <select id="language-proficiency">
+                <option value="--">--</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        
+        <!-- Altri campi di selezione simili -->
+
+        <div id="error-message" class="error-message"></div>
+        <div class="button-container">
+            <div id="success-message" class="success-message" style="display: none;"></div>
+            <button class="btn" onclick="validateAndProceed()">Procedi</button>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+

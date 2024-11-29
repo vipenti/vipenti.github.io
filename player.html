@@ -1,218 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Watch the Lesson!</title>
-    <meta name="description" content="Video Player for Videolessons">
-    <meta name="author" content="Viviana Pentangelo">
-
-    <!-- Favicons -->
-    <link href="assets/img/icon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-    <!-- Template Main CSS File -->
-    <link href="assets/css/exp_style.css" rel="stylesheet">
-
-    <!--<script>
-        function sendQuestion() {
-            let video_id = "2605";  // ID del video (può essere dinamico)
-            let currentTime = player.getCurrentTime();  // Ottieni il timestamp attuale in secondi
-            let minutes = Math.floor(currentTime / 60);  // Converti in minuti
-            let seconds = Math.floor(currentTime % 60);  // Ottieni i secondi rimanenti
-            let timestamp = minutes + ":" + (seconds < 10 ? '0' + seconds : seconds);  // Formatta MM:SS
-
-            let questionInput = document.getElementById("question-input");
-            let question = questionInput.value;
-            let chatHistory = document.getElementById('chat-history');
-
-            fetch('https://script.google.com/macros/s/AKfycbzpsUEn_PUD1vNzLJ51IiqiSqwQjv-1OzL5VZDJws69JDVFYlX2z1vdnXMcgiD4rMzD/exec', {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: 'video_id=' + encodeURIComponent(video_id) +
-                      '&timestamp=' + encodeURIComponent(timestamp) +
-                      '&question=' + encodeURIComponent(question)
-            }).then(() => {
-                alert("Domanda inviata!");
-
-                let newQuestion = document.createElement('p');
-                newQuestion.textContent = `Minuto ${timestamp}: ${question}`;
-
-                chatHistory.appendChild(newQuestion);
-
-                questionInput.value = '';
-
-                chatHistory.scrollTop = chatHistory.scrollHeight;
-
-            }).catch(err => {
-                console.error(err);
-                alert("Errore nell'invio della domanda.");
-            });
-        }
-    </script>-->
-
-    <!-- =======================================================
-    * Template Name: eNno
-    * Updated: Sep 18 2023 with Bootstrap v5.3.2
-    * Template URL: https://bootstrapmade.com/enno-free-simple-bootstrap-template/
-    * Author: BootstrapMade.com
-    * License: https://bootstrapmade.com/license/
-    ======================================================== -->
-  </head>
+    <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/exp_style.css">
+    <script src="https://www.youtube.com/iframe_api"></script>
 </head>
-
-<!-- Implementation ID: AKfycbzpsUEn_PUD1vNzLJ51IiqiSqwQjv-1OzL5VZDJws69JDVFYlX2z1vdnXMcgiD4rMzD-->
-<!-- URL: https://script.google.com/macros/s/AKfycbzpsUEn_PUD1vNzLJ51IiqiSqwQjv-1OzL5VZDJws69JDVFYlX2z1vdnXMcgiD4rMzD/exec-->
-
 <body>
-
-<!-- Schermata iniziale per l'inserimento del codice -->
-<div id="lesson-input">
-  <h2>Inserisci codice lezione</h2>
-  <p> Test: Inserisci un valore da 1 a 5 </p>
-  <input type="text" id="lesson-id" placeholder="Inserisci ID lezione">
-  <button onclick="checkLessonId()">GO</button>
-  <p id="error-message">ID non valido</p>
-</div>
-
-<!-- Contenuto principale nascosto inizialmente -->
-<div class="container" id="main-content">
-  <!-- Contenitore del video e della chat -->
-  <div class="main-content">
-    <!-- Contenitore per il video -->
-    <div>
-      <h2 id="lesson-title">Lezione #</h2>
-      <div id="video-player"></div>
-    </div>
-
-    <!-- Contenitore per la chat -->
-    <div>
-      <h2>Le tue domande</h2>
-      <div id="chat-box">
-        <!-- Storico delle domande -->
-        <div id="chat-history">
-          <!-- Le domande appariranno qui -->
+    <div class="container">
+        <!-- Primo div per il primo video -->
+        <div id="video-1-container">
+            <h2 class="lesson-title">Lezione #<span class="lesson-number">1</span></h2>
+            <div class="main-content">
+                <div id="video-player-1" class="video-player"></div>
+                <div class="chat-box">
+                    <h2>Le tue domande</h2>
+                    <div id="chat-history-1" class="chat-history"></div>
+                    <textarea id="question-input-1" class="question-input" placeholder="Scrivi la tua domanda..."></textarea>
+                    <button class="submit-button" onclick="sendQuestion(1)">Invia Domanda</button>
+                </div>
+            </div>
+            <div class="button-container">
+              <button id="next-video-btn" class="btn btn-secondary end-button" onclick="nextVideo()">Passa al secondo video</button>
+            </div>
         </div>
-        <!-- Text input e invio -->
-        <textarea id="question-input" rows="4" cols="50" placeholder="Scrivi la tua domanda..."></textarea>
-        <button id="submit-button" onclick="sendQuestion()">Invia Domanda</button>
-        <p style="color: grey; font-size: 13px;"> <i>Premi <strong>una sola volta per domanda</strong>. 
-          Appena l'invio avrà avuto successo, apparirà a schermo. </i></p>
-      </div>
+
+        <!-- Secondo div per il secondo video -->
+        <div id="video-2-container" style="display: none;">
+            <h2 class="lesson-title">Lezione #<span class="lesson-number">2</span></h2>
+            <div class="main-content">
+                <div id="video-player-2" class="video-player"></div>
+                <div class="chat-box">
+                    <h2>Le tue domande</h2>
+                    <div id="chat-history-2" class="chat-history"></div>
+                    <textarea id="question-input-2" class="question-input" placeholder="Scrivi la tua domanda..."></textarea>
+                    <button class="submit-button" onclick="sendQuestion(2)">Invia Domanda</button>
+                </div>
+            </div>
+            <div class="button-container">
+              <button id="complete-survey-btn" class="btn btn-success end-button" onclick="completeSurvey()">Passa al survey di completamento</button>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- Pulsante finale -->
-  <!--<div id="end-button">
-    <button>Fine</button>
-  </div>-->
-</div>
+    <script>
+        let participantId = "";
+        let video1 = "";
+        let video2 = "";
+        let player1, player2;
 
-<!-- API di YouTube -->
-<script src="https://www.youtube.com/iframe_api"></script>
-<script>
-        var player;
-        var videoId = '';  // L'ID del video verrà settato dopo che l'utente inserisce un ID valido
-        var inputId = '';
-
-        // Dizionario delle lezioni {id: videoId}
-
+        // Dizionario dei video
         const lessons = {
-          "1": "jmmW0F0biz0",
-          "2": "q6kJ71tEYqM",
-          "3": "qYNweeDHiyU",
-          "4": "Yq0QkCxoTHM",
-          "5": "AXn2XVLf7d0",
+            "1": "jmmW0F0biz0",
+            "2": "q6kJ71tEYqM",
+            "3": "qYNweeDHiyU",
+            "4": "Yq0QkCxoTHM",
+            "5": "AXn2XVLf7d0"
         };
 
-        // Funzione per controllare l'ID della lezione
-        function checkLessonId() {
-          inputId = document.getElementById('lesson-id').value;
-          const errorMessage = document.getElementById('error-message');
-
-          if (lessons[inputId]) {
-              document.getElementById('lesson-input').style.display = 'none';
-              document.getElementById('main-content').style.display = 'flex';
-
-              videoId = lessons[inputId];
-
-              player = new YT.Player('video-player', {
-                  height: '360',
-                  width: '640',
-                  videoId: videoId,
-                  playerVars: {
-                      'rel': 0,
-                      'controls': 1,
-                      'disablekb': 0,
-                      'modestbranding': 1
-                  }
-              });
-
-              const lessonTitle = document.getElementById('lesson-title');
-              lessonTitle.textContent += inputId;
-          } else {
-              errorMessage.style.display = 'block';
-          }
+        // Recupera i parametri dall'URL
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            participantId = params.get("participantId");
+            video1 = params.get("video1");
+            video2 = params.get("video2");
         }
 
-        // Funzione per inviare la domanda
-        function sendQuestion() {
-            console.log("ID del video che sto inviando:", inputId);
+        // Inizializza la pagina
+        function onYouTubeIframeAPIReady() {
+            getQueryParams();
+            loadVideo("video-player-1", lessons[video1], (player) => player1 = player);
+        }
 
-            let video_id = videoId;  // ID del video (può essere dinamico)
-            let currentTime = player.getCurrentTime();  // Ottieni il timestamp attuale in secondi
-            let minutes = Math.floor(currentTime / 60);  // Converti in minuti
-            let seconds = Math.floor(currentTime % 60);  // Ottieni i secondi rimanenti
-            let timestamp = minutes + ":" + (seconds < 10 ? '0' + seconds : seconds);  // Formatta MM:SS
+        // Funzione per caricare un video
+        function loadVideo(playerId, videoId, callback) {
+            const player = new YT.Player(playerId, {
+                height: '540',
+                width: '960',
+                videoId: videoId,
+                playerVars: {
+                    'rel': 0,
+                    'controls': 1,
+                    'disablekb': 0,
+                    'modestbranding': 1
+                },
+                events: {
+                    'onReady': () => callback(player)
+                }
+            });
+        }
 
-            let questionInput = document.getElementById("question-input");
-            let question = questionInput.value;
-            let chatHistory = document.getElementById('chat-history');
+        // Funzione per inviare una domanda
+        function sendQuestion(videoIndex) {
+            const questionInput = document.getElementById(`question-input-${videoIndex}`);
+            const question = questionInput.value.trim();
+            const chatHistory = document.getElementById(`chat-history-${videoIndex}`);
+            const currentVideoId = videoIndex === 1 ? video1 : video2;
+            const currentPlayer = videoIndex === 1 ? player1 : player2;
 
-            // Invia la domanda e aggiorna la chat
-            fetch('https://script.google.com/macros/s/AKfycbzpsUEn_PUD1vNzLJ51IiqiSqwQjv-1OzL5VZDJws69JDVFYlX2z1vdnXMcgiD4rMzD/exec', {
+            if (!question) {
+                alert("Inserisci una domanda prima di inviare.");
+                return;
+            }
+
+            const currentTime = currentPlayer.getCurrentTime();
+            const minutes = Math.floor(currentTime / 60);
+            const seconds = Math.floor(currentTime % 60);
+            const timestamp = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+            fetch('https://script.google.com/macros/s/AKfycbw--HcoBlQaMIoVMyZ5O97xbOChJWbaOcMNiBp833FhgYrqpiqrwxoan-3mb-L80iO_/exec', {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: 'video_id=' + encodeURIComponent(inputId) +
-                      '&timestamp=' + encodeURIComponent(timestamp) +
-                      '&question=' + encodeURIComponent(question)
+                body: `participant_id=${encodeURIComponent(participantId)}` +
+                      `&video_id=${encodeURIComponent(currentVideoId)}` +
+                      `&timestamp=${encodeURIComponent(timestamp)}` +
+                      `&question=${encodeURIComponent(question)}`
             }).then(() => {
-                // alert("Domanda inviata!");
-
-                let newQuestion = document.createElement('p');
-                newQuestion.textContent = `Minuto ${timestamp}: ${question}`;
-
-                chatHistory.appendChild(newQuestion);
-
-                questionInput.value = '';
-
+                const newMessage = document.createElement("p");
+                newMessage.textContent = `Minuto ${timestamp}: ${question}`;
+                chatHistory.appendChild(newMessage);
+                questionInput.value = "";
                 chatHistory.scrollTop = chatHistory.scrollHeight;
-
             }).catch(err => {
                 console.error(err);
                 alert("Errore nell'invio della domanda.");
             });
         }
-    </script>
 
+        // Passa al secondo video
+        function nextVideo() {
+    // Pausa il primo player e distrugge l'istanza
+          if (player1) {
+              player1.pauseVideo(); // Pausa il video
+              player1.destroy();    // Distrugge l'istanza per fermare l'audio
+          }
+
+          // Nasconde il primo div e mostra il secondo
+          document.getElementById("video-1-container").style.display = "none";
+          document.getElementById("video-2-container").style.display = "block";
+
+          // Carica il secondo video nel player
+          loadVideo("video-player-2", lessons[video2], (player) => player2 = player);
+        }
+
+
+        // Completa il survey
+        function completeSurvey() {
+            if (confirm("Vuoi procedere al suvery di completamento? Uscirai da questa pagina e perderai la tua sessione.")) {
+                window.location.href = "https://www.youtube.com/watch?v=QOG0KqnFqxI";
+            }
+        }
+    </script>
 </body>
 </html>
