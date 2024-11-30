@@ -18,7 +18,9 @@
                 const element = document.getElementById(id);
                 return element ? element.value.trim() : null;
             };
-
+            const nVideo = 7;
+            const regex = /^[1-7]$/;
+            const regex2 = /^(?:[1-9]|[1-9][0-9]|1[01][0-9]|12[01])$/;
             const userId = getElementValue("user-id");
             const knowledge = getElementValue("knowledge");
             const interest = getElementValue("interest");
@@ -36,6 +38,7 @@
             const videoId2 = getElementValue("video-id-2");
             const acceptChecked = document.getElementById("accept")?.checked;
             const errorMessage = document.getElementById("error-message");
+            const successMessage = document.getElementById("success-message");
 
             let errors = [];
 
@@ -49,9 +52,17 @@
                 errors.push("Devi inserire il tuo ID Partecipante.");
             }
 
+            if(userId && (!regex2.test(userId))) {
+                errors.push("ID Partecipante non valido.");
+            }
+
             // Controlla ID video
             if (!videoId1 || !videoId2) {
                 errors.push("Devi inserire entrambi gli ID dei video.");
+            }
+
+            if((videoId1 && videoId2) && (!regex.test(videoId1) || !regex.test(videoId2)) || (videoId1 == videoId2)) {
+                errors.push("ID video non validi.");
             }
 
             // Controlla che tutte le selezioni siano complete
@@ -69,6 +80,8 @@
             } else {
                 errorMessage.style.display = "none";
 
+                successMessage.textContent = "Caricamento in corso...\n";
+                successMessage.style.display = "block";
                 // Invia i dati tramite POST
                 sendFormData(userId, knowledge, interest, concentration, criticalThinking, intuition, motivation, abilityToLearn, creativity, logic, memory, emotionality, languageProficiency, videoId1, videoId2);
 
@@ -93,7 +106,7 @@
 
             if (data === "Success") {
                 if (successMessage) {
-                    successMessage.textContent = "Dati inviati con successo! Stai per essere reindirizzato...";
+                    successMessage.textContent = "Dati inviati con successo! Stai per essere reindirizzato...\n";
                     successMessage.style.display = "block";
                 }
             setTimeout(() => {
